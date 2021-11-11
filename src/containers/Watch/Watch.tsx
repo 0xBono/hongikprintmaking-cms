@@ -1,4 +1,5 @@
 import { PageHeader, Table, Tag, Space } from 'antd';
+import router from 'next/router';
 
 export const Watch = () => {
   const columns = [
@@ -6,7 +7,7 @@ export const Watch = () => {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      render: (text) => <a>{text}</a>,
+      render: (text: any) => <a>{text}</a>,
     },
     {
       title: 'Age',
@@ -22,9 +23,9 @@ export const Watch = () => {
       title: 'Tags',
       key: 'tags',
       dataIndex: 'tags',
-      render: (tags) => (
+      render: (tags: any) => (
         <>
-          {tags.map((tag) => {
+          {tags.map((tag: any) => {
             let color = tag.length > 5 ? 'geekblue' : 'green';
             if (tag === 'loser') {
               color = 'volcano';
@@ -41,7 +42,7 @@ export const Watch = () => {
     {
       title: 'Action',
       key: 'action',
-      render: (text, record) => (
+      render: () => (
         <Space size="middle">
           <a>수정하기</a>
           <a>삭제하기</a>
@@ -77,7 +78,7 @@ export const Watch = () => {
   return (
     <PageHeader
       className="site-page-header"
-      onBack={() => null}
+      onBack={() => router.replace('/workspace')}
       title="졸업전시회 작품 관리"
       subTitle="등록된 작품을 관리할 수 있는 페이지입니다."
     >
