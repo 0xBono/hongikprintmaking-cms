@@ -1,13 +1,29 @@
-import { GNBLayout } from 'components/Layouts';
+import { GetServerSideProps } from 'next';
+import { ServerResponse } from 'http';
 
-const Index = () => {
-  return (
-    <GNBLayout>
-      <div style={{ backgroundColor: '#fff', height: '100%' }}>
-        <h1>Hello World</h1>
-      </div>
-    </GNBLayout>
-  );
+const index = () => {};
+
+const redirect = (res: ServerResponse, destination: string, statusCode = 302) => {
+  if (res) {
+    res.writeHead(statusCode, { Location: destination });
+    res.end();
+  }
 };
 
-export default Index;
+export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+  const isServer = typeof window !== 'undefined';
+
+  const hasToken = isServer ?? localStorage.getItem('hongik-user-token');
+
+  if (res && hasToken) {
+    redirect(res, '/workspace');
+  } else {
+    redirect(res, '/auth');
+  }
+
+  return {
+    props: {},
+  };
+};
+
+export default index;
